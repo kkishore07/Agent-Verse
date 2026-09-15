@@ -207,7 +207,7 @@ def coordinate_agents(query: str, context: str, provider: str = "gemini", worksp
     
     # 1. Determine Routing (using LLM or static keywords fallback)
     routing_response = ""
-    api_key = config.get_gemini_key() if provider == "gemini" else config.get_groq_key()
+    api_key = config.get_groq_key() or config.get_gemini_key()
     
     if api_key:
         try:

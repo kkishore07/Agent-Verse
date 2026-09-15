@@ -1,0 +1,19 @@
+{
+    "businessName": "kishore traders",
+    "businessType": "Private Limited",
+    "state": "Tamil Nadu",
+    "district": "coimbatore",
+    "businessStartDate": "2026-10-06",
+    "annualTurnover": 1000000.0,
+    "gstStatus": "Registered",
+    "udyamStatus": "Registered",
+    "enterpriseCategory": "Micro",
+    "employeeCount": 6,
+    "businessSector": "Retail & Trading",
+    "loanRequirement": 1500000.0,
+    "previousAssistance": "No",
+    "socialCategory": "General",
+    "ownerGender": "Male",
+    "area": "Rural",
+    "language": "english"
+}

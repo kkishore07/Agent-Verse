@@ -6,20 +6,48 @@ import config
 
 
 def _call_groq_with_key(api_key: str, system_instruction: str, prompt: str, temperature: float) -> str:
-    """Raw Groq API call using a specific key."""
+    """Raw Groq API call using candidate models."""
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    payload = {
-        "model": "llama-3.3-70b-versatile",
-        "messages": [
-            {"role": "system", "content": system_instruction},
-            {"role": "user", "content": prompt}
-        ],
-        "temperature": temperature
-    }
-    response = requests.post(url, headers=headers, json=payload, timeout=30)
-    response.raise_for_status()
-    return response.json()["choices"][0]["message"]["content"]
+    
+    # Candidate models supported by Groq (env override first)
+    candidate_models = [
+        os.getenv("GROQ_MODEL", "").strip(),
+        "openai/gpt-oss-120b",
+        "openai/gpt-oss-20b",
+        "qwen/qwen3.8-27b",
+        "groq/compound-mini",
+        "llama-3.3-70b-versatile",
+        "llama-3.1-8b-instant",
+    ]
+    candidate_models = [m for m in candidate_models if m]
+
+    last_error = None
+    for model_name in candidate_models:
+        try:
+            payload = {
+                "model": model_name,
+                "messages": [
+                    {"role": "system", "content": system_instruction},
+                    {"role": "user", "content": prompt}
+                ],
+                "temperature": temperature
+            }
+            response = requests.post(url, headers=headers, json=payload, timeout=30)
+            if response.status_code == 200:
+                return response.json()["choices"][0]["message"]["content"]
+            elif response.status_code == 429:
+                response.raise_for_status()
+            else:
+                last_error = f"{response.status_code}: {response.text}"
+                continue
+        except requests.exceptions.HTTPError:
+            raise
+        except Exception as e:
+            last_error = str(e)
+            continue
+
+    raise RuntimeError(f"Groq API call failed across candidate models. Last error: {last_error}")
 
 
 def call_groq_llm(system_instruction: str, prompt: str, temperature: float = 0.2) -> str:
@@ -47,8 +75,12 @@ def call_groq_llm(system_instruction: str, prompt: str, temperature: float = 0.2
 
 
 def call_llm(system_instruction: str, prompt: str, temperature: float = 0.2, provider: str = "groq") -> str:
-    """Unified LLM call — always uses Groq with primary/backup key fallback."""
-    return call_groq_llm(system_instruction, prompt, temperature)
+    """Unified LLM call — uses Groq with automatic fallback to local rule-based engine on failure."""
+    try:
+        return call_groq_llm(system_instruction, prompt, temperature)
+    except Exception as e:
+        print(f"[LLM] Live model call failed ({e}). Utilizing offline local engine fallback.")
+        return fallback_local_agent(system_instruction, prompt)
 
 
 

@@ -263,8 +263,30 @@ def get_customer_insights(workspace_dir: str, config_inactive_days: int = 60) ->
             "is_empty": True
         }
         
-    with open(customers_path, "r", encoding="utf-8") as f:
-        customers_list = json.load(f)
+    customers_list = []
+    if os.path.exists(customers_path):
+        try:
+            with open(customers_path, "r", encoding="utf-8") as f:
+                customers_list = json.load(f)
+        except Exception:
+            customers_list = []
+
+    # Merge any customers stored in MongoDB for this workspace
+    workspace_id = os.path.basename(workspace_dir) if workspace_dir else None
+    if workspace_id:
+        try:
+            from database import db
+            mongo_custs = list(db.customers.find({"workspace_id": workspace_id}, {"_id": 0}))
+            for mc in mongo_custs:
+                if not any(
+                    (mc.get("email") and str(c.get("email", "")).lower() == str(mc["email"]).lower()) or
+                    (mc.get("phone") and str(c.get("phone", "")).strip() == str(mc["phone"]).strip()) or
+                    (mc.get("id") and str(c.get("id", "")) == str(mc["id"]))
+                    for c in customers_list
+                ):
+                    customers_list.append(mc)
+        except Exception as me:
+            pass
         
     tx_df = pd.read_csv(tx_path)
     
@@ -316,8 +338,8 @@ def get_customer_insights(workspace_dir: str, config_inactive_days: int = 60) ->
             profile = {
                 "id": cid,
                 "name": cname,
-                "email": cust["email"],
-                "phone": cust["phone"],
+                "email": cust.get("email", ""),
+                "phone": cust.get("phone", ""),
                 "spending": 0.0,
                 "visits": 0,
                 "last_purchase": "N/A",
@@ -325,9 +347,9 @@ def get_customer_insights(workspace_dir: str, config_inactive_days: int = 60) ->
                 "payment_method": "N/A",
                 "pref_products": [],
                 "purchase_history": [],
-                "segment": "Inactive"
+                "segment": "New"
             }
-            segment_counts["Inactive"] += 1
+            segment_counts["New"] += 1
             customer_profiles.append(profile)
             continue
             

@@ -1,0 +1,49 @@
+Date,TransactionID,CustomerID,CustomerName,ProductID,ProductName,Category,Quantity,Price,Type,Amount,PaymentMode
+2026-06-07,TXN5009,C101,Aarav Sharma,P103,Tata Salt 1kg,Condiments,1,28.0,Sale,28.0,Card
+2026-06-12,TXN5022,C104,Rahul Verma,P103,Tata Salt 1kg,Condiments,1,28.0,Sale,28.0,UPI
+2026-06-12,TXN5027,C107,Amit Gupta,P101,Premium Basmati Rice 5kg,Grains,2,450.0,Sale,900.0,UPI
+2026-06-17,TXN5016,C102,Deepika Patel,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-06-27,TXN5025,C105,Vikram Singh,P106,Britannia Marie Gold Biscuits,Snacks,2,15.0,Sale,30.0,Cash
+2026-06-27,TXN5025,C105,Vikram Singh,P107,Brooke Bond Red Label Tea 250g,Beverages,1,120.0,Sale,120.0,Cash
+2026-06-27,TXN5008,C101,Aarav Sharma,P103,Tata Salt 1kg,Condiments,1,28.0,Sale,28.0,Cash
+2026-07-02,TXN5021,C104,Rahul Verma,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,Cash
+2026-07-02,TXN5021,C104,Rahul Verma,P101,Premium Basmati Rice 5kg,Grains,1,450.0,Sale,450.0,Cash
+2026-07-07,TXN5015,C102,Deepika Patel,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-07-07,TXN5024,C105,Vikram Singh,P102,Gold Winner Sunflower Oil 1L,Oils,1,140.0,Sale,140.0,UPI
+2026-07-12,TXN5020,C103,Priya Nair,P102,Gold Winner Sunflower Oil 1L,Oils,2,140.0,Sale,280.0,Cash
+2026-07-17,TXN5007,C101,Aarav Sharma,P101,Premium Basmati Rice 5kg,Grains,1,450.0,Sale,450.0,UPI
+2026-07-17,TXN5007,C101,Aarav Sharma,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-07-27,TXN5014,C102,Deepika Patel,P101,Premium Basmati Rice 5kg,Grains,2,450.0,Sale,900.0,UPI
+2026-07-27,TXN5014,C102,Deepika Patel,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-07-29,TXN5035,C110,Meera Krishnan,P102,Gold Winner Sunflower Oil 1L,Oils,1,140.0,Sale,140.0,UPI
+2026-08-01,TXN5006,C101,Aarav Sharma,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-08-01,TXN5006,C101,Aarav Sharma,P101,Premium Basmati Rice 5kg,Grains,1,450.0,Sale,450.0,UPI
+2026-08-04,TXN5019,C103,Priya Nair,P106,Britannia Marie Gold Biscuits,Snacks,2,15.0,Sale,30.0,UPI
+2026-08-04,TXN5019,C103,Priya Nair,P107,Brooke Bond Red Label Tea 250g,Beverages,2,120.0,Sale,240.0,UPI
+2026-08-08,TXN5030,C108,Sneha Reddy,P106,Britannia Marie Gold Biscuits,Snacks,2,15.0,Sale,30.0,UPI
+2026-08-11,TXN5023,C105,Vikram Singh,P102,Gold Winner Sunflower Oil 1L,Oils,2,140.0,Sale,280.0,UPI
+2026-08-11,TXN5013,C102,Deepika Patel,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-08-11,TXN5013,C102,Deepika Patel,P101,Premium Basmati Rice 5kg,Grains,1,450.0,Sale,450.0,UPI
+2026-08-12,TXN5005,C101,Aarav Sharma,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-08-18,TXN5034,C110,Meera Krishnan,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-08-21,TXN5031,C109,Rohan Das,P104,Aashirvaad Shudh Chakki Atta 5kg,Grains,1,280.0,Sale,280.0,Cash
+2026-08-21,TXN5004,C101,Aarav Sharma,P103,Tata Salt 1kg,Condiments,1,28.0,Sale,28.0,Card
+2026-08-22,TXN5029,C108,Sneha Reddy,P108,Sunsilk Black Shampoo 180ml,Personal Care,1,145.0,Sale,145.0,UPI
+2026-08-24,TXN5012,C102,Deepika Patel,P105,Toor Dal Premium 1kg,Pulses,2,180.0,Sale,360.0,UPI
+2026-08-26,PO_RESTOCK_C1,,,P101,Restock - Premium Basmati Rice 5kg,Grains,20,350.0,Expense,7000.0,UPI
+2026-08-26,TXN5018,C103,Priya Nair,P106,Britannia Marie Gold Biscuits,Snacks,1,15.0,Sale,15.0,Card
+2026-08-28,TXN5003,C101,Aarav Sharma,P103,Tata Salt 1kg,Condiments,2,28.0,Sale,56.0,UPI
+2026-08-30,TXN5033,C110,Meera Krishnan,P102,Gold Winner Sunflower Oil 1L,Oils,1,140.0,Sale,140.0,UPI
+2026-08-31,PO_RESTOCK_C2,,,P102,Restock - Gold Winner Sunflower Oil 1L,Oils,30,110.0,Expense,3300.0,Cash
+2026-09-03,TXN5028,C108,Sneha Reddy,P107,Brooke Bond Red Label Tea 250g,Beverages,1,120.0,Sale,120.0,UPI
+2026-09-03,TXN5028,C108,Sneha Reddy,P106,Britannia Marie Gold Biscuits,Snacks,2,15.0,Sale,30.0,UPI
+2026-09-03,TXN5011,C102,Deepika Patel,P104,Aashirvaad Shudh Chakki Atta 5kg,Grains,1,280.0,Sale,280.0,Card
+2026-09-05,TXN5017,C103,Priya Nair,P102,Gold Winner Sunflower Oil 1L,Oils,2,140.0,Sale,280.0,Cash
+2026-09-05,TXN5002,C101,Aarav Sharma,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-09-05,TXN5002,C101,Aarav Sharma,P101,Premium Basmati Rice 5kg,Grains,1,450.0,Sale,450.0,UPI
+2026-09-07,TXN5032,C110,Meera Krishnan,P101,Premium Basmati Rice 5kg,Grains,2,450.0,Sale,900.0,UPI
+2026-09-07,TXN5032,C110,Meera Krishnan,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-09-10,TXN5010,C102,Deepika Patel,P105,Toor Dal Premium 1kg,Pulses,1,180.0,Sale,180.0,UPI
+2026-09-10,TXN5010,C102,Deepika Patel,P101,Premium Basmati Rice 5kg,Grains,1,450.0,Sale,450.0,UPI
+2026-09-11,TXN5026,C106,Ananya Rao,P104,Aashirvaad Shudh Chakki Atta 5kg,Grains,2,280.0,Sale,560.0,UPI
+2026-09-12,TXN5001,C101,Aarav Sharma,P103,Tata Salt 1kg,Condiments,2,28.0,Sale,56.0,UPI

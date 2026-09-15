@@ -56,14 +56,14 @@ def get_db():
         # Force a connection attempt to validate the URI early
         _client.admin.command("ping")
         _db = _client["aegisai"]
-        print("[database] ✅ Connected to MongoDB Atlas (aegisai database).")
+        print("[database] [OK] Connected to MongoDB Atlas (aegisai database).")
         _create_indexes(_db)
         return _db
     except (ConnectionFailure, ServerSelectionTimeoutError) as exc:
-        print(f"[database] ❌ Could not connect to MongoDB: {exc}", file=sys.stderr)
+        print(f"[database] [ERROR] Could not connect to MongoDB: {exc}", file=sys.stderr)
         print(
-            "[database] 💡 FIX: Go to https://cloud.mongodb.com → Network Access "
-            "→ Add IP Address → Add 0.0.0.0/0 (Allow from anywhere)",
+            "[database] FIX: Go to https://cloud.mongodb.com -> Network Access "
+            "-> Add IP Address -> Add 0.0.0.0/0 (Allow from anywhere)",
             file=sys.stderr,
         )
         _client = None

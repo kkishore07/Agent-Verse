@@ -1601,30 +1601,70 @@ def get_customers(user_info: dict = Depends(get_current_user_workspace_info)):
 @app.post("/api/customers/add")
 def add_customer(req: CustomerAddRequest, user_info: dict = Depends(get_current_user_workspace_info)):
     workspace_id = user_info["workspace_id"]
+    workspace_dir = user_info.get("workspace_dir")
 
     try:
-        # Check duplicate via MongoDB
-        existing = db.customers.find_one({
-            "workspace_id": workspace_id,
-            "$or": [
-                {"email": req.email.strip().lower()},
-                {"phone": req.phone.strip()}
-            ]
-        })
-        if existing:
-            raise HTTPException(status_code=400, detail="Customer with this email or phone already exists.")
+        req_email = req.email.strip().lower()
+        req_phone = req.phone.strip()
 
-        count = db.customers.count_documents({"workspace_id": workspace_id})
-        new_id = f"C{100 + count + 1}"
+        # Load existing customers from customers.json
+        customers_json_path = os.path.join(workspace_dir, "customers.json") if workspace_dir else ""
+        c_list = []
+        if customers_json_path and os.path.exists(customers_json_path):
+            try:
+                with open(customers_json_path, "r", encoding="utf-8") as f:
+                    c_list = json.load(f)
+            except Exception:
+                c_list = []
+
+        # Load existing customers from MongoDB
+        mongo_custs = []
+        try:
+            mongo_custs = list(db.customers.find({"workspace_id": workspace_id}, {"_id": 0}))
+        except Exception as dbe:
+            print(f"MongoDB query warning: {dbe}")
+
+        all_existing = c_list + mongo_custs
+
+        # Check duplicate
+        for c in all_existing:
+            if (c.get("email") and c.get("email").strip().lower() == req_email) or \
+               (c.get("phone") and c.get("phone").strip() == req_phone):
+                raise HTTPException(status_code=400, detail="Customer with this email or phone already exists.")
+
+        # Determine non-conflicting unique ID (e.g. C111, C112, C113...)
+        max_num = 100
+        for c in all_existing:
+            cid = str(c.get("id", ""))
+            if cid.startswith("C") and cid[1:].isdigit():
+                max_num = max(max_num, int(cid[1:]))
+        new_id = f"C{max_num + 1}"
+
         new_cust = {
             "workspace_id": workspace_id,
             "id": new_id,
             "name": req.name.strip(),
-            "email": req.email.strip().lower(),
-            "phone": req.phone.strip()
+            "email": req_email,
+            "phone": req_phone
         }
-        db.customers.insert_one(new_cust)
+
+        try:
+            db.customers.insert_one(new_cust)
+        except Exception as dbe:
+            print(f"MongoDB insert error: {dbe}")
+
+        new_cust.pop("_id", None)
         return_cust = {k: v for k, v in new_cust.items() if k != "workspace_id"}
+
+        # Sync to workspace customers.json so customer registry & analytics reflect immediately
+        if customers_json_path:
+            try:
+                c_list.append(return_cust)
+                with open(customers_json_path, "w", encoding="utf-8") as f:
+                    json.dump(c_list, f, indent=4)
+            except Exception as sync_err:
+                print(f"Failed syncing customer to customers.json: {sync_err}")
+
         return {"success": True, "message": f"Customer {req.name} added successfully.", "customer": return_cust}
     except HTTPException as he:
         raise he
